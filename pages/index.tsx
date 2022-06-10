@@ -1,23 +1,33 @@
+import React, { FC } from "react";
 import { Row, Col } from "react-bootstrap";
 import Layout from "components/Layout";
 import AuthorInfo from "components/AuthorIntro";
 import LargeCard from "components/LargeCard";
 import SmallCard from "components/SmallCard";
+import { getAllBlogs } from "lib/api";
 
-const IndexPage = () => {
+import { Blog } from "components/SmallCard";
+
+const IndexPage: FC<Props> = ({ blogs }) => {
   return (
     <div>
       <Layout>
         <hr />
-        <AuthorInfo />
-
+        {/* <pre>{JSON.stringify(blogs, null, 2)}</pre> */}
         <Row className="mb-5">
+          {blogs.map((blog: Blog, index: number) => {
+            console.log(blog);
+            return (
+              <Col md="4" key={index}>
+                <SmallCard blog={blog} />
+              </Col>
+            );
+          })}
+
+          <AuthorInfo />
+
           <Col md="10">
             <LargeCard />
-          </Col>
-
-          <Col md="4">
-            <SmallCard />
           </Col>
         </Row>
       </Layout>
@@ -26,3 +36,32 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
+
+export const getStaticProps = async () => {
+  const blogs: Blog[] = await getAllBlogs();
+
+  return {
+    props: {
+      blogs,
+    },
+  };
+};
+
+// export const getServerSideProps = async () => {
+//   const blogs: Blog[] = await getAllBlogs();
+
+//   return {
+//     props: {
+//       blogs,
+//     },
+//   };
+// };
+
+interface Props {
+  blogs: Blog[];
+}
+
+// Function called during build time
+// Only called on the server, not the client
+// Provides props to the page
+// Creates static page
