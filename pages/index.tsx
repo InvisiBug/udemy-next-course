@@ -6,20 +6,19 @@ import LargeCard from "components/LargeCard";
 import SmallCard from "components/SmallCard";
 import { getAllBlogs } from "lib/api";
 
-import { Blog } from "components/SmallCard";
+import { Blog } from "types";
 
 const IndexPage: FC<Props> = ({ blogs }) => {
   return (
-    <div>
+    <>
       <Layout>
         <hr />
         {/* <pre>{JSON.stringify(blogs, null, 2)}</pre> */}
         <Row className="mb-5">
           {blogs.map((blog: Blog, index: number) => {
-            console.log(blog);
             return (
               <Col md="4" key={index}>
-                <SmallCard blog={blog} />
+                <SmallCard blog={blog} link={{ href: "/blogs/[slug]", as: `/blogs/${blog.slug}` }} />
               </Col>
             );
           })}
@@ -31,12 +30,16 @@ const IndexPage: FC<Props> = ({ blogs }) => {
           </Col>
         </Row>
       </Layout>
-    </div>
+    </>
   );
 };
 
 export default IndexPage;
 
+// Function called during build time
+// Only called on the server, not the client
+// Provides props to the page
+// Creates static page
 export const getStaticProps = async () => {
   const blogs: Blog[] = await getAllBlogs();
 
@@ -60,8 +63,3 @@ export const getStaticProps = async () => {
 interface Props {
   blogs: Blog[];
 }
-
-// Function called during build time
-// Only called on the server, not the client
-// Provides props to the page
-// Creates static page

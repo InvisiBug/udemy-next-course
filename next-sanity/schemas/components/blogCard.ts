@@ -22,6 +22,53 @@ export const blogCard = {
       name: "coverImage",
       title: "Cover Image",
       type: "image",
+      fields: [
+        {
+          type: "text",
+          name: "alt",
+          title: "Description",
+        },
+      ],
+    },
+    {
+      name: "content",
+      title: "Content",
+      type: "array",
+      of: [
+        {
+          type: "block",
+        },
+        {
+          type: "image",
+          fields: [
+            {
+              name: "caption",
+              title: "Caption",
+              type: "string",
+              options: {
+                isHighlighted: true, // <-- make this field easily accessible
+              },
+            },
+            {
+              type: "text",
+              name: "alt",
+              title: "Description",
+              options: {
+                isHighlighted: true,
+              },
+            },
+          ],
+          options: {
+            hotspot: true,
+          },
+        },
+        {
+          type: "code",
+          options: {
+            withFilename: true,
+          },
+        },
+      ],
     },
     {
       name: "date",

@@ -1,6 +1,6 @@
 import client from "./sanity";
 
-const blogFields = `
+const blogCardFields = `
   Title,
   subTitle,
   "slug": slug.current,
@@ -11,9 +11,28 @@ const blogFields = `
 
 // Cheet sheet https://www.sanity.io/docs/query-cheat-sheet
 export const getAllBlogs = async () => {
-  const results = await client.fetch(`*[_type == "blog"]{
-    ${blogFields}
-  }`);
+  const query = `*[_type == "blog"]{
+    ${blogCardFields}
+  }`;
 
+  const results = await client.fetch(query);
+
+  return results;
+};
+
+const blogFields = `
+
+`;
+
+export const getBlogBySlug = async (slug: string) => {
+  const query = `*[_type == "blog" && slug.current == $slug]{
+    ${blogCardFields}
+  }`;
+
+  const params = { slug };
+
+  const results = await client.fetch(query, params).then((response) => response?.[0]);
+
+  console.log(results);
   return results;
 };

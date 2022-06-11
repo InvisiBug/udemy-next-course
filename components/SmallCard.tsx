@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 import { Card } from "react-bootstrap";
+import Link from "next/link";
+import { Blog } from "types";
 
-const SmallCard: FC<any> = ({ blog }) => {
+const SmallCard: FC<Props> = ({ blog, link }) => {
   const { image, Title: title, subTitle: subtitle, date, slug, author } = blog;
 
   return (
@@ -23,7 +25,11 @@ const SmallCard: FC<any> = ({ blog }) => {
             <Card.Text>{subtitle}</Card.Text>
           </Card.Body>
         </div>
-        <a className="card-button">Read More</a>
+        {link && (
+          <Link {...link}>
+            <a className="card-button">Read More</a>
+          </Link>
+        )}
       </Card>
     </>
   );
@@ -31,14 +37,10 @@ const SmallCard: FC<any> = ({ blog }) => {
 
 export default SmallCard;
 
-export interface Blog {
-  Title: string;
-  subTitle: string;
-  slug: string;
-  image: HTMLImageElement;
-  date: string;
-  author: {
-    name: string;
-    avatar: HTMLImageElement;
+interface Props {
+  blog: Blog;
+  link?: {
+    href: string;
+    as: string;
   };
 }
