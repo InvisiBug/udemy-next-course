@@ -1,4 +1,4 @@
-import { Rule } from "@sanity/types/dist/dts";
+import { Rule } from "@sanity/types";
 
 export const blogCard = {
   name: "blog",
@@ -29,6 +29,9 @@ export const blogCard = {
           title: "Description",
         },
       ],
+      options: {
+        hotspot: true,
+      },
     },
     {
       name: "content",
@@ -47,6 +50,20 @@ export const blogCard = {
               type: "string",
               options: {
                 isHighlighted: true, // <-- make this field easily accessible
+              },
+            },
+            {
+              title: "Image Position",
+              type: "string",
+              name: "position",
+              options: {
+                list: [
+                  { title: "Centre", value: "center" },
+                  { title: "Left", value: "left" },
+                  { title: "Right", value: "right" },
+                ],
+                layout: "radio",
+                isHighlited: true,
               },
             },
             {

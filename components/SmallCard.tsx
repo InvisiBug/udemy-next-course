@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Card } from "react-bootstrap";
 import Link from "next/link";
 import { Blog } from "types";
+import { urlFor } from "lib/api";
 
 const SmallCard: FC<Props> = ({ blog, link }) => {
   const { image, Title: title, subTitle: subtitle, date, slug, author } = blog;
@@ -18,7 +19,7 @@ const SmallCard: FC<Props> = ({ blog, link }) => {
             </div>
           </Card.Header>
           <div className="view overlay">
-            <Card.Img src={image} alt="Card image cap" />
+            <Card.Img src={urlFor(image).crop("center").fit("clip").url()} alt="Card image cap" />
           </div>
           <Card.Body>
             <Card.Title className="card-main-title">{title}</Card.Title>
